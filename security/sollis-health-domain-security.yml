@@ -1,0 +1,47 @@
+generated: '2026-08-05'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.sollishealth.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 13 07:46:34 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: mp.sollishealth.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 12 23:59:59 2026 GMT
+  hsts: true
+  hsts_max_age: 10886400
+- host: mp-api.sollishealth.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 13 23:59:59 2026 GMT
+  hsts: null
+- host: navigator.sollishealth.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  9 23:59:59 2026 GMT
+  hsts: true
+  hsts_max_age: 10886400
+  hsts_include_subdomains: true
+  hsts_preload: true
+- host: navigator-api.sollishealth.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec 12 23:59:59 2026 GMT
+  hsts: null
+domains:
+- domain: sollishealth.com
+  dnssec: true
+  caa:
+  - 0 issuewild "awstrust.com"
+  - 0 issuewild "comodoca.com"
+  - 0 issuewild "digicert.com; cansignhttpexchanges=yes"
+  - 0 issuewild "letsencrypt.org"
+  - 0 issuewild "pki.goog; cansignhttpexchanges=yes"
+  - 0 issuewild "ssl.com"
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

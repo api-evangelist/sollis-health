@@ -1,0 +1,108 @@
+generated: '2026-08-05'
+method: searched
+source: https://www.sollishealth.com/
+summary: >-
+  The marketing host publishes a real /llms.txt but no RFC 9116 security.txt, no
+  api-catalog, no ai-plugin and no A2A agent card. The member-portal and staff-console
+  SPAs answer 200 with the same React shell for every /.well-known/* path (verified by
+  diffing a nonsense control path), so none of those 200s is a document. The one real
+  discovery document in the estate is the Microsoft Entra External ID (Azure AD B2C)
+  OpenID Connect configuration for the B2C_1_Google user flow, which is served
+  anonymously and is captured verbatim here.
+hosts:
+- host: https://www.sollishealth.com
+  documents:
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    file: ../llms/sollis-health-llms.txt
+  - path: /robots.txt
+    status: 200
+    content_type: text/plain
+    note: 'User-Agent: * / Allow: / — no AI-crawler-specific directives; declares
+      Sitemap https://www.sollishealth.com/sitemap.xml, which itself returns 404.'
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://sollishealthprod.b2clogin.com
+  note: Microsoft Entra External ID (Azure AD B2C) tenant sollishealthprod.onmicrosoft.com,
+    referenced from the Member Portal bundle.
+  documents:
+  - path: /sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: sollis-health-openid-configuration.json
+  - path: /sollishealthprod.onmicrosoft.com/v2.0/.well-known/openid-configuration
+    status: 404
+    note: B2C serves discovery per user-flow policy, not at the tenant root.
+- host: https://mp.sollishealth.com
+  note: Member Portal single-page app. SOFT-404 — every /.well-known/* and /openapi.*
+    path returns 200 with the identical React shell, byte-comparable to a nonsense
+    control path. None of these is a document.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    verified: false
+    reason: soft-404-html-shell
+  - path: /.well-known/openid-configuration
+    status: 200
+    verified: false
+    reason: soft-404-html-shell
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /zzz-control-nonsense-9182.yaml
+    status: 200
+    verified: false
+    reason: control path — proves the 200s above are the SPA catch-all
+- host: https://navigator.sollishealth.com
+  note: Navigator staff dashboard single-page app. Same soft-404 catch-all; returns
+    200 with the React shell for every path probed, including the control.
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    verified: false
+    reason: soft-404-html-shell
+  - path: /openapi.json
+    status: 200
+    verified: false
+    reason: soft-404-html-shell
+  - path: /zzz-control-nonsense-9182.json
+    status: 200
+    verified: false
+    reason: control path — proves the 200s above are the SPA catch-all
+- host: https://navigator-api.sollishealth.com
+  note: >-
+    Real first-party API origin. Returns a hard JSON 404 envelope
+    ({ "statusCode": 404, "message": "Resource not found" }) for every discovery
+    path, and 401 on a real resource path.
+  documents:
+  - path: /swagger/v1/swagger.json
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: https://mp-api.sollishealth.com
+  note: Real first-party API origin. Same hard JSON 404 envelope on every discovery path.
+  documents:
+  - path: /swagger/v1/swagger.json
+    status: 404
+  - path: /openapi.json
+    status: 404
+x-evidence:
+  fetched: '2026-08-05'
+  method: HTTP GET, redirects followed, each candidate diffed against a nonsense
+    control path on the same host before being recorded as verified.

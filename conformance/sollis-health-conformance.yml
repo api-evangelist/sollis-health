@@ -1,0 +1,96 @@
+generated: '2026-08-05'
+method: searched
+source: https://www.sollishealth.com/
+note: >-
+  Assessed without an OpenAPI — Sollis Health publishes none — so every entry below is
+  read from a document actually fetched (the Azure AD B2C OIDC discovery document, the
+  published /llms.txt, the HIPAA Notice of Privacy Practices) or from an observed
+  absence. No standard is asserted from marketing language alone.
+standards:
+- id: openid-connect
+  conforms: true
+  evidence: >-
+    Anonymously-served OIDC discovery document at the B2C_1_Google user flow, with
+    issuer, authorization/token/end_session endpoints, jwks_uri, RS256 id_token signing
+    and pairwise subject types.
+  source: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+- id: oauth2
+  conforms: true
+  evidence: OAuth 2.0 authorization-code and implicit response types advertised by the
+    same discovery document; the Member Portal requests a resource scope at token
+    acquisition.
+  source: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    A real, hand-authored /llms.txt is served at the marketing host (verified against a
+    nonsense control path, which 404s). It follows the community proposal — H1, summary,
+    curated link sections — and adds explicit agent-behaviour guidance ("do not invent
+    availability", "avoid clinical diagnosis", "Sollis is not insurance").
+  source: https://www.sollishealth.com/llms.txt
+- id: hipaa
+  conforms: true
+  scope: organization
+  evidence: >-
+    A full HIPAA Notice of Privacy Practices is published, naming the Health Insurance
+    Portability and Accountability Act, protected health information, 42 CFR Part 2
+    program records, and patient rights. This is a regulatory notice a covered entity is
+    required to publish — it is not a third-party audit or certification.
+  source: https://www.sollishealth.com/notice-of-privacy-practices
+- id: openapi
+  conforms: false
+  evidence: 'No OpenAPI or Swagger document at any probed location on either API origin
+    or either application host: /openapi.json, /openapi.yaml, /swagger.json,
+    /swagger/v1/swagger.json, /v1/openapi.json, /api-docs all 404 (hard JSON 404 on the
+    API origins; SPA soft-200 on the app hosts, rejected against a control path).'
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface is published. The Navigator console
+    uses a SignalR hub (/activity/hubs/activity) for real-time updates, but no
+    AsyncAPI document or webhook catalog is published.
+- id: graphql
+  conforms: false
+  evidence: No /graphql endpoint on either API origin (404); the 200s on the two SPA
+    hosts are the React catch-all shell, not a GraphQL surface.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on the marketing host and on both API
+    origins.
+- id: rfc8615-well-known
+  conforms: partial
+  evidence: The only well-known document served in the estate is the Azure AD B2C OIDC
+    discovery configuration. No api-catalog, ai-plugin, agent card, or oauth-authorization-server
+    document is published on any Sollis-controlled host.
+- id: a2a
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json 404 on the
+    marketing host and both API origins; the 200s on navigator.sollishealth.com are the
+    SPA shell and were rejected.
+- id: mcp
+  conforms: false
+  evidence: No hosted MCP server is published or referenced anywhere in the estate,
+    including in the /llms.txt.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'The API origins return a bespoke JSON error envelope
+    ({ "statusCode": 404, "message": "Resource not found" }) with content-type
+    application/json, not application/problem+json.'
+compliance_program_published: false
+compliance_program_note: >-
+  No trust center, no SOC 2 / ISO 27001 / HITRUST attestation and no security or
+  compliance page were found on any Sollis host. The HIPAA Notice of Privacy Practices
+  above is a required regulatory notice, not a published compliance program, so no
+  `Compliance` pointer is emitted.
+x-evidence:
+  fetched: '2026-08-05'
+  urls:
+  - url: https://www.sollishealth.com/llms.txt
+    http_status: 200
+  - url: https://www.sollishealth.com/notice-of-privacy-practices
+    http_status: 200
+  - url: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+    http_status: 200
+  - url: https://navigator-api.sollishealth.com/swagger/v1/swagger.json
+    http_status: 404
+  - url: https://www.sollishealth.com/.well-known/security.txt
+    http_status: 404

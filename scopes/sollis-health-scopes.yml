@@ -1,0 +1,48 @@
+generated: '2026-08-05'
+method: searched
+source: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+note: >-
+  Not derived from an OpenAPI — Sollis Health publishes none. The OIDC scope comes from
+  the anonymously-served Azure AD B2C discovery document; the resource scope is the
+  value the Member Portal's public JavaScript bundle requests at token acquisition.
+  Only scopes actually observed are listed; the full scope surface of these private
+  APIs is not published and cannot be enumerated without credentials.
+docs: null
+schemes:
+- name: b2c-openid-connect
+  source: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/b2c_1_google/oauth2/v2.0/authorize
+    tokenUrl: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/b2c_1_google/oauth2/v2.0/token
+scopes:
+- scope: openid
+  description: Standard OpenID Connect scope; the only value advertised in the B2C
+    user flow's scopes_supported.
+  flows: [authorizationCode]
+  sources:
+  - https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+- scope: https://sollishealthprod.onmicrosoft.com/241c93c7-6f84-41cf-90ed-ba0eea2713ad/Appointment.All
+  short_name: Appointment.All
+  description: Application resource scope requested by the Sollis Health Member Portal
+    for its backend API. Registered against the sollishealthprod tenant application
+    241c93c7-6f84-41cf-90ed-ba0eea2713ad. Scope semantics are not documented publicly;
+    the name indicates full access to the appointment resource.
+  api: sollis-health:member-portal-api
+  sources:
+  - https://mp.sollishealth.com/static/js/main.bee280e8.js
+coverage:
+  scopes_observed: 2
+  complete: false
+  complete_note: >-
+    Partial by construction. Azure AD B2C does not enumerate application resource scopes
+    in its discovery document, and Sollis publishes no scope or permission reference,
+    so any scope not requested by the two public front-end bundles is invisible from
+    outside.
+x-evidence:
+  fetched: '2026-08-05'
+  urls:
+  - url: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+    http_status: 200
+  - url: https://mp.sollishealth.com/static/js/main.bee280e8.js
+    http_status: 200

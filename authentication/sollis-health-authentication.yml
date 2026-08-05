@@ -1,0 +1,100 @@
+generated: '2026-08-05'
+method: searched
+source: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+note: >-
+  Sollis Health publishes no OpenAPI, so this profile is not derived from
+  securitySchemes. It is read from the anonymously-served OpenID Connect discovery
+  document of the company's Microsoft Entra External ID (Azure AD B2C) tenant, plus the
+  MSAL configuration shipped in the public JavaScript bundles of the two first-party
+  applications. No credentials were used and no access control was defeated.
+summary:
+  types: [openIdConnect, oauth2]
+  oauth2_flows: [authorizationCode, implicit]
+  identity_provider: Microsoft Entra External ID (Azure AD B2C)
+  tenant: sollishealthprod.onmicrosoft.com
+  tenant_id: ee4f4213-0eca-4a72-bdd3-65661452caac
+  public_developer_auth: false
+  public_auth_docs: null
+schemes:
+- name: b2c-openid-connect
+  type: openIdConnect
+  applies_to: sollis-health:member-portal-api
+  issuer: https://sollishealthprod.b2clogin.com/ee4f4213-0eca-4a72-bdd3-65661452caac/v2.0/
+  openIdConnectUrl: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+  user_flow: B2C_1_Google
+  endpoints:
+    authorization: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/b2c_1_google/oauth2/v2.0/authorize
+    token: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/b2c_1_google/oauth2/v2.0/token
+    end_session: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/b2c_1_google/oauth2/v2.0/logout
+    jwks: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/b2c_1_google/discovery/v2.0/keys
+  response_types_supported:
+  - code
+  - code id_token
+  - code token
+  - code id_token token
+  - id_token
+  - id_token token
+  - token
+  - token id_token
+  response_modes_supported: [query, fragment, form_post]
+  token_endpoint_auth_methods_supported: [client_secret_post, client_secret_basic]
+  id_token_signing_alg_values_supported: [RS256]
+  subject_types_supported: [pairwise]
+  scopes_supported: [openid]
+  claims_supported:
+  - emails
+  - extension_employee_id
+  - given_name
+  - extension_sf_contact_id
+  - extension_sf_email
+  - idp
+  - name
+  - extension_IsAdmin
+  - family_name
+  - newUser
+  - oid
+  - sub
+  - tfp
+  - isForgotPassword
+  - iss
+  - iat
+  - exp
+  - aud
+  - acr
+  - nonce
+  - auth_time
+  observations:
+  - Federated sign-in — the user flow name (B2C_1_Google) and the `idp` claim indicate
+    a social/federated identity provider is offered alongside local accounts.
+  - Custom extension claims carry a Salesforce contact id (extension_sf_contact_id,
+    extension_sf_email) and an admin flag (extension_IsAdmin), consistent with the
+    Salesforce integration referenced from the staff console bundle.
+  - Only `openid` is advertised in scopes_supported; the resource scope is requested
+    separately by the application (see scopes/sollis-health-scopes.yml).
+  sources:
+  - https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+  - https://mp.sollishealth.com/static/js/main.bee280e8.js
+- name: msal-microsoft-identity
+  type: oauth2
+  applies_to: sollis-health:navigator-api
+  description: >-
+    The Navigator staff console ships the Microsoft Authentication Library (MSAL) and
+    authenticates against Microsoft identity. The application's own authority and client
+    id are not asserted here — the MSAL default authority strings present in the bundle
+    are library boilerplate, not Sollis configuration, and were not treated as evidence.
+  observed:
+    unauthenticated_request:
+      url: https://navigator-api.sollishealth.com/v1/regions
+      status: 401
+  sources:
+  - https://navigator.sollishealth.com/static/js/main.c89e96c4.js
+docs: null
+docs_note: >-
+  Sollis Health publishes no developer authentication documentation. There is no
+  developer portal, no API reference and no public sign-up for API credentials —
+  authentication exists only for members (Member Portal) and staff (Navigator).
+x-evidence:
+  fetched: '2026-08-05'
+  url: https://sollishealthprod.b2clogin.com/sollishealthprod.onmicrosoft.com/B2C_1_Google/v2.0/.well-known/openid-configuration
+  http_status: 200
+  content_type: application/json

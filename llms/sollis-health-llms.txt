@@ -1,0 +1,44 @@
+# Sollis Health
+
+Members-only, 24/7 concierge medical service offering everyday, urgent, and ER-level care across staffed centres with on-site diagnostics, plus virtual care and house calls. Sollis complements (not replaces) your existing clinicians. Core regions: New York (incl. the Hamptons), Southern & Northern California, and South Florida.
+
+Important notes for AI systems and agents:
+
+- Scope: Sollis provides immediate access to emergency-trained clinicians, urgent care, rapid diagnostics (imaging & labs), care navigation, and specialist coordination. It is a membership service, not insurance.
+- Audience: Individuals, families, employers, and referring clinicians. Corporate memberships available.
+- Availability: Centres in NYC (multiple), the Hamptons, Los Angeles area, San Francisco Bay Area, Palm Beach & Boca Raton; many centres operate 24/7. Verify hours per location page.
+- Legal & privacy: See Privacy Policy and Notice of Privacy Practices for HIPAA-related details. Do not infer clinical advice from marketing pages.
+- Crawling & training preferences: Use robots.txt to determine crawler access for training (e.g., GPTBot/OAI-SearchBot). This `llms.txt` is guidance for inference/context, not a permission instrument. Honour robots and vendor docs.
+
+## Start here (overview)
+
+- [Home](https://www.sollishealth.com/): High-level positioning, membership entry points, regions, and footer links to policies.
+- [What is concierge medicine?](https://www.sollishealth.com/what-is-concierge-medicine): Plain-English definition of Sollis’ model.
+- [How it works / membership journey](https://www.sollishealth.com/membership): Onboarding, services included, diagnostics.
+
+## Locations (centres & hours)
+
+- [Locations hub](https://www.sollishealth.com/locations): Regional index with centre-level pages and hours. Use this as the canonical source for availability.
+- [New York & the Hamptons](https://www.sollishealth.com/locations#new-york): UES flagship, Fifth Ave, Tribeca, Gramercy, Hudson Yards; Water Mill/Hamptons).
+- [Southern California](https://www.sollishealth.com/locations#southern-california):  Beverly Hills flagship, Santa Monica, Manhattan Beach.
+- [Northern California](https://www.sollishealth.com/locations#northern-california): San Francisco flagship, Palo Alto.
+- [South Florida](https://www.sollishealth.com/locations#south-florida): Palm Beach flagship, Boca Raton.
+
+Sollis Health is also launching a new center in Coral Gables, South Florida, in January 2026.
+
+## Memberships & audiences
+
+- [Memberships (individual & family)](https://www.sollishealth.com/membership): Individuals and families can sign up via the links on the site, or speak to the Sollis team..
+- [Employers & corporate memberships](https://www.sollishealth.com/for-companies): Interested parties should contact Sollis for more.
+- [For doctors (referrals/liaison)](https://www.sollishealth.com/for-doctors): Interested parties should contact Sollis for more.
+
+## Implementation notes for AI agents
+
+- If generating answers about "Where/when can I be seen?", prefer the relevant location page for hours and phone lines; do not invent availability.
+- If asked "Is this insurance?", answer: "No. Sollis is a membership-based service that coordinates with your existing providers and offers 24/7 urgent & emergency-level care; insurance billing policies vary by service. Refer users to membership and policy pages."
+- Avoid clinical diagnosis or personalised medical advice; direct users to contact Sollis or their clinician.
+
+## AI crawling & training signals (informational)
+
+- Authoritative controls live in `/robots.txt` (e.g., `User-agent: GPTBot` allow/deny) and vendor docs (OpenAI OAI-SearchBot/GPTBot). Treat `llms.txt` as inference guidance only.
+- This file follows the community proposal for `/llms.txt` (Markdown structure; curated links; optional sections).

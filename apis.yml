@@ -1,23 +1,162 @@
 aid: sollis-health
 name: Sollis Health
-description: 'Sollis Health is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Sollis Health is a members-only concierge medicine and 24/7 private
+  emergency care company operating staffed medical centers in New York and the Hamptons,
+  Southern and Northern California, and South Florida. Membership provides unlimited
+  access to emergency-trained physicians, on-site imaging and laboratory diagnostics,
+  house calls, virtual visits, travel medicine, specialist coordination, care navigation
+  and patient advocacy. Sollis is a membership service rather than insurance, and it
+  complements rather than replaces a member''s existing clinicians. Individual, family,
+  pediatric and corporate memberships are sold, along with a Platinum tier and bespoke
+  employer plans. Sollis operates its own member-facing software — a Member Portal and
+  an internal Navigator clinical dashboard — backed by first-party APIs secured with
+  Microsoft Entra External ID (Azure AD B2C); those APIs are not published as a public
+  developer program.'
 url: https://raw.githubusercontent.com/api-evangelist/sollis-health/refs/heads/main/apis.yml
+image: https://content.sollishealth.com/images/sollis_logo.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
 - Company
-apis: []
+- Health
+- Healthcare
+- Concierge Medicine
+- Urgent Care
+- Emergency Care
+- Membership
+- Telehealth
+- HIPAA
+apis:
+- aid: sollis-health:member-portal-api
+  name: Sollis Health Member Portal API
+  description: 'First-party backend API for the Sollis Health Member Portal (mp.sollishealth.com),
+    the members-only web application used to book appointments, view records and manage
+    membership. Authentication is Microsoft Entra External ID (Azure AD B2C) under the
+    sollishealthprod tenant, with an application scope of Appointment.All. The host is
+    live and returns a JSON 404 envelope on unknown paths; no OpenAPI, Swagger, GraphQL
+    or other machine-readable contract is published at any probed location. This is an
+    internal product API, not a public developer program.'
+  humanURL: https://mp.sollishealth.com/
+  baseURL: https://mp-api.sollishealth.com
+  tags:
+  - Members
+  - Appointments
+  - Portal
+  x-access: private
+  x-access-note: Auth-gated behind Azure AD B2C; no public specification or reference published.
+  x-evidence:
+    fetched: '2026-08-05'
+    discovered_in: https://mp.sollishealth.com/static/js/main.bee280e8.js
+    probes:
+    - url: https://mp-api.sollishealth.com/
+      status: 404
+    - url: https://mp-api.sollishealth.com/swagger/v1/swagger.json
+      status: 404
+    - url: https://mp-api.sollishealth.com/openapi.json
+      status: 404
+  properties:
+  - type: Authentication
+    url: authentication/sollis-health-authentication.yml
+  - type: OAuthScopes
+    url: scopes/sollis-health-scopes.yml
+- aid: sollis-health:navigator-api
+  name: Sollis Health Navigator API
+  description: 'First-party backend API for the Sollis Health Navigator Dashboard
+    (navigator.sollishealth.com), the internal clinical and care-coordination console used
+    by Sollis staff. Exposes versioned resource paths (observed: /v1/regions, /v1/departments,
+    /v1/GetGroups) and a SignalR real-time hub at /activity/hubs/activity. Authentication is
+    Microsoft identity (MSAL); an unauthenticated GET on /v1/regions returns 401. No OpenAPI,
+    Swagger or GraphQL contract is published at any probed location.'
+  humanURL: https://navigator.sollishealth.com/
+  baseURL: https://navigator-api.sollishealth.com
+  tags:
+  - Clinical
+  - Internal
+  - Care Coordination
+  x-access: private
+  x-access-note: Staff-only console API; unauthenticated requests return 401. No public specification.
+  x-evidence:
+    fetched: '2026-08-05'
+    discovered_in: https://navigator.sollishealth.com/static/js/main.c89e96c4.js
+    probes:
+    - url: https://navigator-api.sollishealth.com/v1/regions
+      status: 401
+    - url: https://navigator-api.sollishealth.com/swagger/v1/swagger.json
+      status: 404
+    - url: https://navigator-api.sollishealth.com/openapi.json
+      status: 404
+  properties:
+  - type: Authentication
+    url: authentication/sollis-health-authentication.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/sollis-health-domain-security.yml
 - type: Website
+  url: https://www.sollishealth.com/
+- type: SecondaryMarket
   url: https://www.hiive.com/securities/sollis-health-stock
+- type: SignUp
+  url: https://www.sollishealth.com/sign-up
+- type: Pricing
+  url: https://www.sollishealth.com/membership
+- type: TermsOfService
+  url: https://www.sollishealth.com/legal
+- type: PrivacyPolicy
+  url: https://www.sollishealth.com/privacy
+- type: Support
+  url: https://www.sollishealth.com/contact-us
+- type: FAQ
+  url: https://www.sollishealth.com/faqs
+- type: Blog
+  url: https://www.sollishealth.com/blog
+- type: Press
+  url: https://www.sollishealth.com/press
+- type: Careers
+  url: https://job-boards.greenhouse.io/sollishealth
+- type: LinkedIn
+  url: https://www.linkedin.com/company/sollishealth
+- type: LLMsTxt
+  url: llms/sollis-health-llms.txt
+- type: WellKnown
+  url: well-known/sollis-health-well-known.yml
+- type: Authentication
+  url: authentication/sollis-health-authentication.yml
+- type: OAuthScopes
+  url: scopes/sollis-health-scopes.yml
+- type: Conformance
+  url: conformance/sollis-health-conformance.yml
+x-enrichment:
+  date: '2026-08-05'
+  status: minimal
+  artifacts_added: 7
+  pass: local-v1
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    Sollis Health runs two real first-party APIs — mp-api.sollishealth.com behind the
+    members-only portal and navigator-api.sollishealth.com behind the staff clinical
+    console, both secured by its Azure AD B2C tenant — but it sells concierge memberships,
+    not software, and offers no developer program, portal, SDK, sandbox or API reference
+    of any kind; both origins return a hard JSON 404 for every OpenAPI/Swagger discovery
+    path and 401 on a real resource path.
+  evidence:
+  - url: https://navigator-api.sollishealth.com/v1/regions
+    status: 401
+  - url: https://navigator-api.sollishealth.com/swagger/v1/swagger.json
+    status: 404
+  - url: https://mp-api.sollishealth.com/openapi.json
+    status: 404
+  - url: https://www.sollishealth.com/developers
+    status: 404
+  - url: https://www.sollishealth.com/llms.txt
+    status: 200
+  checked: '2026-08-05'
