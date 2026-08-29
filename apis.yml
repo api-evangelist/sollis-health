@@ -13,6 +13,17 @@ description: 'Sollis Health is a members-only concierge medicine and 24/7 privat
   Microsoft Entra External ID (Azure AD B2C); those APIs are not published as a public
   developer program.'
 url: https://raw.githubusercontent.com/api-evangelist/sollis-health/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://content.sollishealth.com/images/sollis_logo.png
 x-type: company
 x-source: harvest:secondary-market
